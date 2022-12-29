@@ -1,6 +1,6 @@
 # cram-api
 
-Challenge Response Authentication Mechanism (CRAM) Example
+Challenge Response Authentication Mechanism (CRAM) Example, Using Elliptic Curve Digital Signature Algorithm.
 
 ## [1] Registration
 
