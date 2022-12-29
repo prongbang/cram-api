@@ -3,14 +3,8 @@ package signature
 import (
 	"crypto/ecdsa"
 	"crypto/sha256"
-	"encoding/asn1"
 	"encoding/base64"
-	"math/big"
 )
-
-type ecdsaSignature struct {
-	R, S *big.Int
-}
 
 type Signature struct {
 	PublicKey *ecdsa.PublicKey
@@ -25,10 +19,5 @@ func (s *Signature) Verify() bool {
 	}
 	hash := sha256.Sum256([]byte(s.Message))
 
-	ecdsaSignature := &ecdsaSignature{}
-	if _, err = asn1.Unmarshal(signatureBytes, ecdsaSignature); err != nil {
-		return false
-	}
-
-	return ecdsa.Verify(s.PublicKey, hash[:], ecdsaSignature.R, ecdsaSignature.S)
+	return ecdsa.VerifyASN1(s.PublicKey, hash[:], signatureBytes)
 }
